@@ -92,7 +92,7 @@ PUBKEY_ID_NETWORK_FEE = NULL_PUBKEY_ID
 MAX_SCRIPT = 1000000
 MAX_PUBKEY = 65
 
-NO_CLOB = 'BUG_NO_CLOB'
+NO_CLOB = 'CLOB'
 
 # XXX This belongs in another module.
 class InvalidBlock(Exception):

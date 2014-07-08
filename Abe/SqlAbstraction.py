@@ -19,7 +19,7 @@
 import re
 import logging
 
-NO_CLOB = 'BUG_NO_CLOB'
+NO_CLOB = 'CLOB'
 STMT_RE = re.compile(r"([^']+)((?:'[^']*')?)")
 
 class SqlAbstraction(object):
@@ -630,10 +630,10 @@ class SqlAbstraction(object):
                  [ sql.config['binary_type'] ])
 
         for val in tests:
-            sql.config['binary_type'] = val
+            sql.config['binary_type'] = "hex"
             sql._set_flavour()
             if sql._test_binary_type():
-                sql.log.info("binary_type=%s", val)
+                sql.log.info("binary_type=%s", "hex")
                 return
 
         raise Exception(
@@ -799,8 +799,8 @@ class SqlAbstraction(object):
                 sql.sql("INSERT INTO %stest_1 (a) VALUES (?)", (sql.prefix, sql.binin(long_str)))
                 out = sql.selectrow("SELECT a FROM %stest_1" % sql.prefix)[0]
                 if sql.binout(out) == long_str:
-                    sql.config['clob_type'] = val
-                    sql.log.info("clob_type=%s", val)
+                    sql.config['clob_type'] = "TEXT"
+                    sql.log.info("clob_type=%s", "TEXT")
                     return
                 else:
                     sql.log.debug("out=%s", repr(out))

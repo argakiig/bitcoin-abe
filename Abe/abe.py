@@ -47,8 +47,8 @@ COPYRIGHT_YEARS = '2011'
 COPYRIGHT = "Abe developers"
 COPYRIGHT_URL = 'https://github.com/bitcoin-abe'
 
-DONATIONS_BTC = '1PWC7PNHL1SgvZaN7xEtygenKjWobWsCuf'
-DONATIONS_NMC = 'NJ3MSELK1cWnqUa6xhF2wUYAnz3RSrWXcK'
+DONATIONS_BTC = '19GGjd7Vn9J7fRpgsXVnQENN7pV4eJcqVD'
+DONATIONS_NMC = 'RzHNPS5yxJUfHMeW9K9XtLAY7NTq4u2EXm'
 
 TIME1970 = time.strptime('1970-01-01','%Y-%m-%d')
 EPOCH1970 = calendar.timegm(TIME1970)
@@ -69,7 +69,7 @@ DEFAULT_TEMPLATE = """
 </head>
 <body>
     <h1><a href="%(dotdot)s%(HOMEPAGE)s"><img
-     src="%(dotdot)s%(STATIC_PATH)slogo32.png" alt="Abe logo" /></a> %(h1)s
+     src="%(dotdot)s%(STATIC_PATH)slogo32.png" alt="StealthCoin Logo" height="32px" width="32px"/></a> %(h1)s
     </h1>
     %(body)s
     <p><a href="%(dotdot)sq">API</a> (machine-readable pages)</p>
@@ -80,7 +80,7 @@ DEFAULT_TEMPLATE = """
         %(download)s
         Tips appreciated!
         <a href="%(dotdot)saddress/%(DONATIONS_BTC)s">BTC</a>
-        <a href="%(dotdot)saddress/%(DONATIONS_NMC)s">NMC</a>
+        <a href="%(dotdot)saddress/%(DONATIONS_NMC)s">XST</a>
     </p>
 </body>
 </html>
@@ -286,7 +286,7 @@ class Abe:
         return getattr(abe, 'handle_' + cmd, None)
 
     def handle_chains(abe, page):
-        page['title'] = ABE_APPNAME + ' Search'
+        page['title'] = 'Stealth Coin Search'
         body = page['body']
         body += [
             abe.search_form(page),
@@ -561,7 +561,7 @@ class Abe:
         body += abe.short_link(page, 'b/' + block_shortlink(b['hash']))
 
         is_stake_chain = chain.has_feature('nvc_proof_of_stake')
-        is_stake_block = is_stake_chain and b['is_proof_of_stake']
+        is_stake_block = is_stake_chain #and b['is_proof_of_stake']
 
         body += ['<p>']
         if is_stake_chain:
@@ -643,10 +643,10 @@ class Abe:
             for txout in tx['out']:
                 if is_stake_block:
                     if tx is b['transactions'][0]:
-                        assert txout['value'] == 0
+                        #assert txout['value'] == 0
                         assert len(tx['out']) == 1
                         body += [
-                            format_satoshis(b['proof_of_stake_generated'], chain),
+                            #format_satoshis(b['proof_of_stake_generated'], chain),
                             ' included in the following transaction']
                         continue
                     if txout['value'] == 0:
@@ -1386,7 +1386,7 @@ class Abe:
 
         else:
             # Default: Bitcoin address starting with "1".
-            version, hash = '00', arg1
+            version, hash = '0b', arg1
 
         try:
             hash = hash.decode('hex')
